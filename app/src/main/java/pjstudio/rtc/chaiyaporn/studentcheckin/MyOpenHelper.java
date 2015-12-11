@@ -10,8 +10,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class MyOpenHelper extends SQLiteOpenHelper {
     private static final String  DATABASE_NAME = "Student.db";
     private static final int DATABASE_VERSION = 1;
-    private static final String USER_TABLE = "create table userTABLE(_id integer primary key, "+" User text, Password text ,Teacher text);";
-    private static final String List_TABLE = "create table listTABLE(_id integer primary key," + " Date text,Name text,Item integer);";
+    private static final String USER_TABLE = "create table userTABLE(_id integer primary key, " + " User text, Password text ,Teacher text);";
+    private static final String List_TABLE = "create table listTABLE(_id integer primary key ," + " Teacher text, Date text,Name text, Item integer);";
+
 
 
 
