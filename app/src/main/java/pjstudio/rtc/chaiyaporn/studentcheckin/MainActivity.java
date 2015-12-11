@@ -15,6 +15,14 @@ public class MainActivity extends AppCompatActivity {
 
         objUserTABLE = new UserTABLE(this);
         objListTABLE = new ListTABLE(this);
+        //Tester
+        testAddValue();
 
     }//onCreate
+
+    private void testAddValue() {
+        objUserTABLE.addValueToUser("User", "Password", "Teacher");
+        objListTABLE.addValueOrder("Teacher", "Date", "Name", 4);
+
+    }//test
 }//main class
