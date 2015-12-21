@@ -25,6 +25,10 @@ public class UserTABLE {
         readSQLite = objMyOpenHelper.getReadableDatabase();
     }//constuctor
 
+
+
+
+
     public long addValueToUser(String strUser, String strPassword, String strTeacher) {
         ContentValues objContentValues = new ContentValues();
         objContentValues.put(COLUMN_USER, strUser);
@@ -32,6 +36,5 @@ public class UserTABLE {
         objContentValues.put(COLUMN_TEACHER, strTeacher);
         return writeSQLite.insert(TABLE_USER, null, objContentValues);
     }// addValueToUser
-
 
 }// User table
