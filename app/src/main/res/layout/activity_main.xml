@@ -9,8 +9,35 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="pjstudio.rtc.chaiyaporn.studentcheckin.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <ImageView
+        android:layout_width="@dimen/image"
+        android:layout_height="@dimen/image"
+        android:id="@+id/imageView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/image2" />
+
+    <EditText
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!" />
+        android:id="@+id/editText"
+        android:layout_below="@+id/imageView"
+        android:hint="User : " />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText2"
+        android:layout_below="@+id/editText"
+        android:hint="Password :"
+        android:inputType="textPassword" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:id="@+id/button"
+        android:onClick="clickLogin"
+        android:layout_alignParentBottom="true" />
+
 </RelativeLayout>

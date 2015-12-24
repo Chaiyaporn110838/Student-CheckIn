@@ -5,6 +5,8 @@ import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -22,11 +24,16 @@ public class MainActivity extends AppCompatActivity {
 
     private UserTABLE objUserTABLE;
     private ListTABLE objListTABLE;
+    private EditText editUser , editPassword;
+    private String strUserChoose,strPasswordChoose;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //bind Widget
+        bindWidget();
+
 
         objUserTABLE = new UserTABLE(this);
         objListTABLE = new ListTABLE(this);
@@ -36,6 +43,24 @@ public class MainActivity extends AppCompatActivity {
         SynJSonToSQLite();
 
     }//onCreate
+
+    public void clickLogin(View view) {
+        strUserChoose = editUser.getText().toString().trim();
+        strPasswordChoose = editPassword.getText().toString().trim();
+        if (strUserChoose.equals("") || strUserChoose.equals("")) {
+            //Alert Error
+            MyAlert objMyAlert = new MyAlert();
+            objMyAlert.errorDialog(MainActivity.this, "Warning","Please fill in blank data ");
+
+        } else {
+        }
+    }//clickLogin
+
+    private void bindWidget() {
+        editUser = (EditText) findViewById(R.id.editText);
+        editPassword = (EditText) findViewById(R.id.editText2);
+
+    }//bind Widget
 
     private void SynJSonToSQLite() {
 
@@ -81,13 +106,14 @@ public class MainActivity extends AppCompatActivity {
         try {
             final JSONArray objJsonArray = new JSONArray(strJSon);
             for (int i = 0; i < objJsonArray.length(); i++) {
-                JSONObject objJSONObject = objJsonArray.getJSONObject(i);
-                String strUser = objJSONObject.getString("User");
-                String strPassword = objJSONObject.getString("Password");
-                String strTeacher = objJSONObject.getString("Teacher");
+                JSONObject objJSonObject = objJsonArray.getJSONObject(i);
+                String strUser = objJSonObject.getString("User");
+                String strPassword = objJSonObject.getString("Password");
+                String strTeacher = objJSonObject.getString("Teacher");
 
                 long insertVale = objUserTABLE.addValueToUser(strUser, strPassword, strTeacher);
             }//for
+
 
         } catch (Exception e) {
             Log.d("Student CheckIn", "Error Up Value ==>" + e.toString());
