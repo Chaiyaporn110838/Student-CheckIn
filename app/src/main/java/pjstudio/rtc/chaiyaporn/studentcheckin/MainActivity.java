@@ -1,5 +1,10 @@
 package pjstudio.rtc.chaiyaporn.studentcheckin;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
@@ -25,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private UserTABLE objUserTABLE;
     private ListTABLE objListTABLE;
     private EditText editUser , editPassword;
-    private String strUserChoose,strPasswordChoose;
+    private String strUserChoose,strPasswordChoose,strPasswordTrue,strName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +43,21 @@ public class MainActivity extends AppCompatActivity {
         objUserTABLE = new UserTABLE(this);
         objListTABLE = new ListTABLE(this);
         //Tester
-        testAddValue();
+        //testAddValue();
+        //delete All Data
+        deleteAllData();
+
         //synJsonToSQLite
         SynJSonToSQLite();
 
     }//onCreate
+
+    private void deleteAllData() {
+        SQLiteDatabase ojbSQLite = openOrCreateDatabase("Student.db", MODE_PRIVATE, null);
+        ojbSQLite.delete("userTABLE", null, null);
+
+
+    }//deleteAllData
 
     public void clickLogin(View view) {
         strUserChoose = editUser.getText().toString().trim();
@@ -53,8 +68,61 @@ public class MainActivity extends AppCompatActivity {
             objMyAlert.errorDialog(MainActivity.this, "Warning","Please fill in blank data ");
 
         } else {
+
+            checkUser();
         }
     }//clickLogin
+
+    private void checkUser() {
+        try {
+            String strData[] = objUserTABLE.searchUser(strUserChoose);
+            strPasswordTrue = strData[2];
+            strName = strData[3];
+
+
+
+            Log.d("Student CheckIn", "Wellcome" + strName );
+
+            checkPassword();
+
+        } catch (Exception e) {
+            MyAlert objMyAlert = new MyAlert();
+            objMyAlert.errorDialog(MainActivity.this,"No This User", "No "+ strUserChoose + "  in my DataBase");
+        }
+
+
+    }//checkUser
+
+    private void checkPassword() {
+        if (strPasswordChoose.equals(strPasswordTrue)) {
+            //Intent to list Activity
+            wellcomeUser();
+        } else {
+            MyAlert objMyAlert = new MyAlert();
+            objMyAlert.errorDialog(MainActivity.this,"Password False","Please Try agains Password False");
+
+        }
+
+    }//checkPassword
+
+    private void wellcomeUser() {
+        final AlertDialog.Builder objAlert = new AlertDialog.Builder(this);
+        objAlert.setIcon(R.drawable.user);
+        objAlert.setTitle("Wellcome to My Student CheckIn");
+        objAlert.setMessage("Wellcome " + strName + "\n" + "To Student CheckIn ");
+        objAlert.setCancelable(false);
+        objAlert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Intent objIntent = new Intent(MainActivity.this, ListActivity.class);
+                objIntent.putExtra("Name", strName);
+                startActivity(objIntent);
+                finish();
+            }
+        });
+        objAlert.show();
+
+    }//wellcomeUser
 
     private void bindWidget() {
         editUser = (EditText) findViewById(R.id.editText);
@@ -122,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
     }//synJSonToSQLite
 
     private void testAddValue() {
-        objUserTABLE.addValueToUser("User", "Password", "Teacher");
+        objUserTABLE.addValueToUser("somboonT", "12345", "อ.สมบูรณ์ แซ่เจ็ง Online");
         objListTABLE.addValueOrder("Teacher", "Date", "Name", 4);
 
     }//test
