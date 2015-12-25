@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private ListTABLE objListTABLE;
     private EditText editUser , editPassword;
     private String strUserChoose,strPasswordChoose,strPasswordTrue,strName;
+    private DiplomaTABLE objDiplomaTABLE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
         objUserTABLE = new UserTABLE(this);
         objListTABLE = new ListTABLE(this);
+        objDiplomaTABLE = new DiplomaTABLE(this);
         //Tester
         //testAddValue();
         //delete All Data
@@ -192,6 +194,7 @@ public class MainActivity extends AppCompatActivity {
     private void testAddValue() {
         objUserTABLE.addValueToUser("somboonT", "12345", "อ.สมบูรณ์ แซ่เจ็ง Online");
         objListTABLE.addValueOrder("Teacher", "Date", "Name", 4);
+        objDiplomaTABLE.addValueToDiploma("StudentId", "Name","Present","Late","Leave","Upsent","CheckPoint","Caption");
 
     }//test
 }//main class
